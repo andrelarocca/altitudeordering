@@ -1,11 +1,6 @@
-altitude: main.o graph.o
-	g++ main.o graph.o -o altitude
-
-main.o: main.c
-	g++ -c main.c -o main.o
-
-graph.o: graph.c
-	g++ -c graph.c -o graph.o
-
-clean:
-	rm *o altitude
+altitude: graph.o main.o
+	gcc graph.o main.o -o altitude
+main.o: main.c graph.h
+	gcc -g -c main.c
+graph.o: graph.h graph.c
+	gcc -g -c graph.c
