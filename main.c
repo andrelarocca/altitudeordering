@@ -9,9 +9,10 @@ int main (int argc, char *argv[]) {
 
 	//Initialize empty list of edges
 	head = NULL;
+	n_edges = 0;
 
 	//Get number of vertices
-	while ((n < 0) || (n > 26)) {
+	while ((n < 2) || (n > 26)) {
 		fprintf(stdout, "\nType the number of vertices: ");
 		scanf("%d", &n);
 	}
@@ -25,6 +26,11 @@ int main (int argc, char *argv[]) {
 			createEdge(aux, i+97, j+97);
 		}
 	}
+
+	printEdges();
+
+	//Order edge list
+
 
 	return 0;
 }

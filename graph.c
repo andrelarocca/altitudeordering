@@ -19,10 +19,30 @@ void insertEdge (Edge *e) {
 	} else { //Non empty list
 		Edge *last;
 		last = head;
-		while (last->prox != NULL) {
-			last = last->prox;
+		while (last->next != NULL) {
+			last = last->next;
 		}
-		last->prox = e;
+		last->next = e;
+	}
+	n_edges++;
+}
+
+void orderEdges() {
+	Edge *i, *j, *min, *pre_i;
+	min = head;
+	i = head;
+	pre_i = head;
+
+	while (i != NULL) {
+		j = i->next;
+		while (j != NULL) {
+			if (j->weight < min->weight) min = j;
+			j = j->next;
+		}
+		i = i->next;
+		if (i != head) {
+			pre_i = pre_i->next;
+		}
 	}
 }
 
@@ -33,6 +53,7 @@ void printEdges () {
 	fprintf(stdout, "\n-------------------------");
 	while (e != NULL) {
 		fprintf(stdout, "\nEdge between \'%c\' and \'%c\', weight: %d", e->v1, e->v2, e->weight);
+		e = e->next;
 	}
-	fprintf(stdout, "\n-------------------------");
+	fprintf(stdout, "\n-------------------------\n");
 }
