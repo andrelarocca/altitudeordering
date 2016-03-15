@@ -11,11 +11,24 @@ typedef struct Edge {
 } Edge;
 
 Edge *head;
-int n_edges;
+Edge *mst;
+int n_edges, n_v, n_mst;
 
-void createEdge (int weight, char v1, char v2);
-void insertEdge (Edge *e);
+typedef struct BinaryTree {
+	int size;
+	int *parents;
+} BinaryTree;
+
+BinaryTree *bt;
+
+void createEdge (int weight, char v1, char v2, int is_mst);
+void insertEdge (Edge *e, int is_mst);
 void orderEdges();
-void printEdges ();
+void printEdges (int is_mst);
+void makeSet (int q);
+int  findCanonical (int q);
+int  union_ (int cx, int cy);
+void binaryTreeKruskal();
+void printParents();
 
 #endif

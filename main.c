@@ -9,28 +9,42 @@ int main (int argc, char *argv[]) {
 
 	//Initialize empty list of edges
 	head = NULL;
+	mst = NULL;
 	n_edges = 0;
+	n_v = 0;
+	n_mst = 0;
 
 	//Get number of vertices
 	while ((n < 2) || (n > 26)) {
 		fprintf(stdout, "\nType the number of vertices: ");
 		scanf("%d", &n);
 	}
-	
+	n_v = n;
+
+	//Initialize empty binary tree
+	bt = (BinaryTree*)malloc(sizeof(BinaryTree));
+	bt->parents = (int*)malloc(n*sizeof(int));
+	bt->size = 0;
+
 	//Get edge weights
 	for (i = 0; i < n; i++) {
+		makeSet(i); //Initialize parents
 		for (j = i+1; j < n; j++) {
-			fprintf(stdout, "\nType the weight of the edge between \'%c\' and \'%c\': ", i+97, j+97);
+			fprintf(stdout, "\nType the weight of the edge between \'%c\' and \'%c\' (-1 for none): ", i+97, j+97);
 			scanf("%d", &aux);
 					
-			createEdge(aux, i+97, j+97);
+			if (aux != -1) createEdge(aux, i+97, j+97, 0);
 		}
 	}
 
-	printEdges();
-
 	//Order edge list
+	orderEdges();
 
+	//Binary Tree Kruskal
+	binaryTreeKruskal();
+
+	printParents();
+	printEdges(1);
 
 	return 0;
 }
