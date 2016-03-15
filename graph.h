@@ -26,7 +26,7 @@ void insertEdge (Edge *e, int is_mst);
 void orderEdges();
 void makeSet (int q);
 int  findCanonical (int q);
-int  union_ (int cx, int cy);
+int  makeUnion (int cx, int cy);
 void binaryTreeKruskal();
 void printEdges (int is_mst);
 void printParents();

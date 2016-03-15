@@ -6,6 +6,9 @@ void createEdge (int weight, char v1, char v2, int is_mst) {
 	Edge *e;
 	e = (Edge*)malloc(sizeof(Edge));
 
+	// if (is_mst == 1)
+	// fprintf(stdout, "weight = %d\n", weight);
+
 	e->weight = weight;
 	e->v1 = v1;
 	e->v2 = v2;
@@ -83,7 +86,7 @@ int findCanonical (int q) {
 	return q;
 }
 
-int union_ (int cx, int cy) {
+int makeUnion (int cx, int cy) {
 	bt->parents[cx] = bt->size;
 	bt->parents[cy] = bt->size;
 	makeSet(bt->size);
@@ -100,7 +103,9 @@ void binaryTreeKruskal() {
 
 		if (cx != cy) {
 			fprintf(stdout, "cx=%d, cy=%d, e(w)=%d, e(v1)=%c|%d, e(v2)=%c|%d\n", cx, cy, e->weight, e->v1, e->v1-97, e->v2, e->v2-97);
-			union_(cx, cy);
+			//fprintf(stdout, "weight fora = %d\n", e->weight);
+			makeUnion(cx, cy);
+			//fprintf(stdout, "weight fora = %d\n", e->weight);
 			createEdge(e->weight, e->v1, e->v2, 1);
 		}
 

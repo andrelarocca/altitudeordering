@@ -46,7 +46,7 @@ int main (int argc, char *argv[]) {
 				scanf("%d", &aux);
 			} else {
 				fscanf(file, "%d", &aux);
-				fprintf(stdout, "%d\n", aux);
+				//fprintf(stdout, "%d\n", aux);
 			}			
 					
 			if (aux != -1) createEdge(aux, i+97, j+97, 0);
@@ -59,7 +59,7 @@ int main (int argc, char *argv[]) {
 
 	//Binary Tree Kruskal
 	binaryTreeKruskal();
-	printEdges(1);
+	//printEdges(1);
 
 	if (from_file == 1) fclose(file);
 
