@@ -73,20 +73,6 @@ void orderEdges() {
 	}
 }
 
-void printEdges (int is_mst) {
-	Edge *e;
-
-	if (is_mst == 0) e = head;
-	else e = mst;
-
-	fprintf(stdout, "\n-------------------------");
-	while (e != NULL) {
-		fprintf(stdout, "\nEdge between \'%c\'%d and \'%c\'%d, weight: %d", e->v1, e->v1-97, e->v2, e->v2-97, e->weight);
-		e = e->next;
-	}
-	fprintf(stdout, "\n-------------------------\n");
-}
-
 void makeSet (int q) {
 	bt->parents[q] = -1;
 	bt->size += 1;
@@ -113,12 +99,27 @@ void binaryTreeKruskal() {
 		cy = findCanonical(e->v2-97);
 
 		if (cx != cy) {
+			fprintf(stdout, "cx=%d, cy=%d, e(w)=%d, e(v1)=%c|%d, e(v2)=%c|%d\n", cx, cy, e->weight, e->v1, e->v1-97, e->v2, e->v2-97);
 			union_(cx, cy);
 			createEdge(e->weight, e->v1, e->v2, 1);
 		}
 
 		e = e->next;
 	}
+}
+
+void printEdges (int is_mst) {
+	Edge *e;
+
+	if (is_mst == 0) e = head;
+	else e = mst;
+
+	fprintf(stdout, "\n-------------------------");
+	while (e != NULL) {
+		fprintf(stdout, "\nEdge between \'%c\'%d and \'%c\'%d, weight: %d", e->v1, e->v1-97, e->v2, e->v2-97, e->weight);
+		e = e->next;
+	}
+	fprintf(stdout, "\n-------------------------\n");
 }
 
 void printParents() {
