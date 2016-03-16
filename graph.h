@@ -30,5 +30,6 @@ int  makeUnion (int cx, int cy);
 void binaryTreeKruskal();
 void printEdges (int is_mst);
 void printParents();
+void freeLists();
 
 #endif

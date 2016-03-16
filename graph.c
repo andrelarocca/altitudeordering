@@ -12,6 +12,7 @@ void createEdge (int weight, char v1, char v2, int is_mst) {
 	e->weight = weight;
 	e->v1 = v1;
 	e->v2 = v2;
+	e->next = NULL;
 
 	insertEdge(e, is_mst);
 }
@@ -77,19 +78,32 @@ void orderEdges() {
 }
 
 void makeSet (int q) {
+	fprintf(stdout, "\n-- MAKE SET (%d)\n", q);
 	bt->parents[q] = -1;
+	fprintf(stdout, "bt->parents[%d] = %d\n", q, bt->parents[q]);
 	bt->size += 1;
+	fprintf(stdout, "bt->size = %d\n", bt->size);
 }
 
 int findCanonical (int q) {
-	while (bt->parents[q] >= 0) q = bt->parents[q];
+	fprintf(stdout, "\n-- FIND CANONICAL (%d)\n", q);
+	fprintf(stdout, "bt->parents[%d] = %d\n", q, bt->parents[q]);
+	while (bt->parents[q] >= 0) {
+		q = bt->parents[q];
+		fprintf(stdout, "bt->parents[%d] = %d\n", q, bt->parents[q]);
+	}
+	fprintf(stdout, "return q = %d\n", q);
 	return q;
 }
 
 int makeUnion (int cx, int cy) {
+	fprintf(stdout, "\n-- MAKE UNION (%d, %d)\n", cx, cy);
 	bt->parents[cx] = bt->size;
+	fprintf(stdout, "bt->parents[%d] = %d (bt->size)\n", cx, bt->parents[cx]);
 	bt->parents[cy] = bt->size;
+	fprintf(stdout, "bt->parents[%d] = %d (bt->size)\n", cy, bt->parents[cy]);
 	makeSet(bt->size);
+	fprintf(stdout, "return bt->size - 1 = %d\n", bt->size-1);
 	return bt->size-1;
 }
 
@@ -133,4 +147,27 @@ void printParents() {
 		fprintf(stdout, "Parent[%c|%d] = %d\n", i+97, i, bt->parents[i]);
 	}
 	fprintf(stdout, "Size = %d\n", bt->size);
+}
+
+void freeLists() {
+	Edge *a, *pre_a;
+	
+	pre_a = head;
+	a = head->next;
+	
+
+	while (pre_a != NULL) {
+		free(pre_a);
+		pre_a = a;
+		if (a != NULL) a = a->next;
+	}
+
+	pre_a = mst;
+	a = mst->next;
+
+	while (pre_a != NULL) {
+		free(pre_a);
+		pre_a = a;
+		if (a != NULL) a = a->next;
+	}
 }

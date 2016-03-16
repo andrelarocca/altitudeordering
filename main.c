@@ -33,13 +33,17 @@ int main (int argc, char *argv[]) {
 	}	
 	n_v = n;
 
+	//int max_edges = n*(n-1)/2;
+	
 	//Initialize empty binary tree
 	bt = (BinaryTree*)malloc(sizeof(BinaryTree));
 	bt->parents = (int*)malloc(n*sizeof(int));
 	bt->size = 0;
 
+	//for (i = 0; i < max_edges; i++) makeSet(i);
+
 	for (i = 0; i < n; i++) {
-		makeSet(i); //Initialize parents
+		makeSet(i);
 		for (j = i+1; j < n; j++) {
 			if (from_file == 0) {
 				fprintf(stdout, "\nType the weight of the edge between \'%c\' and \'%c\' (-1 for none): ", i+97, j+97);
@@ -51,7 +55,7 @@ int main (int argc, char *argv[]) {
 					
 			if (aux != -1) createEdge(aux, i+97, j+97, 0);
 		}
-	}	
+	}
 
 	//Order edge list
 	orderEdges();
@@ -59,8 +63,11 @@ int main (int argc, char *argv[]) {
 
 	//Binary Tree Kruskal
 	binaryTreeKruskal();
-	//printEdges(1);
+	printEdges(1);
 
+	// free(bt->parents);
+	// free(bt);
+	// freeLists();
 	if (from_file == 1) fclose(file);
 
 	return 0;
