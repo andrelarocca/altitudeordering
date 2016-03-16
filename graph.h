@@ -24,7 +24,7 @@ BinaryTree *bt;
 void createEdge (int weight, char v1, char v2, int is_mst);
 void insertEdge (Edge *e, int is_mst);
 void orderEdges();
-void makeSet (int q);
+void makeSet (int q, int inc);
 int  findCanonical (int q);
 int  makeUnion (int cx, int cy);
 void binaryTreeKruskal();
