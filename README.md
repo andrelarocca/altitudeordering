@@ -16,10 +16,10 @@ There are two ways to use this algorithm:
   * - The program will automatically get data from file.
   * - You will learn how to format the file in the next section
   
-## Debugging
-_Debug is only available if you choose the *Get graph data from file* way of using._
-Simple as it should be, just add the option `debug` after your command line, like this:
-`./altitude test.in debug`
+### Verbose
+_Verbose mode is only available if you choose the *Get graph data from file* way of using._
+Simple as it should be, just add the option `verbose` after your command line, like this:
+`./altitude test.in verbose`
 
 # File Format
 The input file should have one integer on each line.
