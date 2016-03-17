@@ -4,7 +4,7 @@
 #ifndef GRAPH_H
 #define GRAPH_H
 
-int debug;
+int verbose;
 
 typedef struct Edge {
 	int weight;

@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 #include "graph.h"
 
 int main (int argc, char *argv[]) {
@@ -14,7 +15,7 @@ int main (int argc, char *argv[]) {
 	n_edges = 0;
 	n_v = 0;
 	n_mst = 0;
-	debug = 0;
+	verbose = 0;
 
 	
 	FILE *file;
@@ -23,7 +24,9 @@ int main (int argc, char *argv[]) {
 		from_file = 1;
 	}
 
-	if (argc == 3) debug = 1;
+	if (argc == 3) {
+		if (strcmp(argv[2], "verbose") == 0) verbose = 1;
+	}
 
 	//Get graph data
 	if (from_file == 0) {
@@ -62,9 +65,9 @@ int main (int argc, char *argv[]) {
 	}
 
 	// //Order edge list
-	if (debug) printEdges(0);
+	if (verbose) printEdges(0);
 	orderEdges();
-	if (debug) printEdges(0);
+	if (verbose) printEdges(0);
 
 	// //Binary Tree Kruskal
 	binaryTreeKruskal();
