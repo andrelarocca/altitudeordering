@@ -32,7 +32,7 @@ The first line (after the number of vertices) represents the weight of the edge 
     2  //Edge between 'a' and 'd' weights 2
     5  //Edge between 'b' and 'c' weights 5
     -1 //No edge between 'b' and 'd'
-    4  //Edge between 'c' and 'd' weights 4`
+    4  //Edge between 'c' and 'd' weights 4
 
 _**ATTENTION:** Comments are not allowed in the file, they are just a way to explain!_
 
