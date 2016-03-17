@@ -78,32 +78,32 @@ void orderEdges() {
 }
 
 void makeSet (int q, int inc) {
-	fprintf(stdout, "\n-- MAKE SET (%d)\n", q);
+	if (debug) fprintf(stdout, "\n-- MAKE SET (%d)\n", q);
 	bt->parents[q] = -1;
-	fprintf(stdout, "bt->parents[%d] = %d\n", q, bt->parents[q]);
+	if (debug) fprintf(stdout, "bt->parents[%d] = %d\n", q, bt->parents[q]);
 	if (inc == 1) bt->size += 1;
-	fprintf(stdout, "bt->size = %d\n", bt->size);
+	if (debug) fprintf(stdout, "bt->size = %d\n", bt->size);
 }
 
 int findCanonical (int q) {
-	fprintf(stdout, "\n-- FIND CANONICAL (%d)\n", q);
-	fprintf(stdout, "bt->parents[%d] = %d\n", q, bt->parents[q]);
+	if (debug) fprintf(stdout, "\n-- FIND CANONICAL (%d)\n", q);
+	if (debug) fprintf(stdout, "bt->parents[%d] = %d\n", q, bt->parents[q]);
 	while (bt->parents[q] >= 0) {
 		q = bt->parents[q];
-		fprintf(stdout, "bt->parents[%d] = %d\n", q, bt->parents[q]);
+		if (debug) fprintf(stdout, "bt->parents[%d] = %d\n", q, bt->parents[q]);
 	}
-	fprintf(stdout, "return q = %d\n", q);
+	if (debug) fprintf(stdout, "return q = %d\n", q);
 	return q;
 }
 
 int makeUnion (int cx, int cy) {
-	fprintf(stdout, "\n-- MAKE UNION (%d, %d)\n", cx, cy);
+	if (debug) fprintf(stdout, "\n-- MAKE UNION (%d, %d)\n", cx, cy);
 	bt->parents[cx] = bt->size;
-	fprintf(stdout, "bt->parents[%d] = %d (bt->size)\n", cx, bt->parents[cx]);
+	if (debug) fprintf(stdout, "bt->parents[%d] = %d (bt->size)\n", cx, bt->parents[cx]);
 	bt->parents[cy] = bt->size;
-	fprintf(stdout, "bt->parents[%d] = %d (bt->size)\n", cy, bt->parents[cy]);
+	if (debug) fprintf(stdout, "bt->parents[%d] = %d (bt->size)\n", cy, bt->parents[cy]);
 	makeSet(bt->size, 1);
-	fprintf(stdout, "return bt->size - 1 = %d\n", bt->size-1);
+	if (debug) fprintf(stdout, "return bt->size - 1 = %d\n", bt->size-1);
 	return bt->size-1;
 }
 
@@ -112,16 +112,16 @@ void binaryTreeKruskal() {
 	Edge *e;
 	e = head;
 	while (e != NULL) {
-		fprintf(stdout, "\n\n-- ARESTA %c -> %c, peso = %d\n", e->v1, e->v2, e->weight);
+		if (debug) fprintf(stdout, "\n\n-- ARESTA %c -> %c, peso = %d\n", e->v1, e->v2, e->weight);
 
 		cx = findCanonical(e->v1-97);
 		cy = findCanonical(e->v2-97);
 
 		if (cx != cy) {
 			//fprintf(stdout, "cx=%d, cy=%d, e(w)=%d, e(v1)=%c|%d, e(v2)=%c|%d\n", cx, cy, e->weight, e->v1, e->v1-97, e->v2, e->v2-97);
-			fprintf(stdout, "weight=%d, v1=%c, v2=%c\n", e->weight, e->v1, e->v2);
+			if (debug) fprintf(stdout, "weight=%d, v1=%c, v2=%c\n", e->weight, e->v1, e->v2);
 			makeUnion(cx, cy);
-			fprintf(stdout, "weight=%d, v1=%c(%d), v2=%c(%d)\n", e->weight, e->v1, e->v1-97, e->v2, e->v2-97);
+			if (debug) fprintf(stdout, "weight=%d, v1=%c(%d), v2=%c(%d)\n", e->weight, e->v1, e->v1-97, e->v2, e->v2-97);
 			createEdge(e->weight, e->v1, e->v2, 1);
 		}
 

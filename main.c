@@ -14,13 +14,16 @@ int main (int argc, char *argv[]) {
 	n_edges = 0;
 	n_v = 0;
 	n_mst = 0;
+	debug = 0;
 
 	
 	FILE *file;
-	if (argc == 2) {
+	if (argc > 1) {
 		file = fopen(argv[1], "r+");
 		from_file = 1;
 	}
+
+	if (argc == 3) debug = 1;
 
 	//Get graph data
 	if (from_file == 0) {
@@ -59,17 +62,17 @@ int main (int argc, char *argv[]) {
 	}
 
 	// //Order edge list
-	printEdges(0);
+	if (debug) printEdges(0);
 	orderEdges();
-	printEdges(0);
+	if (debug) printEdges(0);
 
 	// //Binary Tree Kruskal
 	binaryTreeKruskal();
 	printEdges(1);
 
-	// free(bt->parents);
-	// free(bt);
-	// freeLists();
+	free(bt->parents);
+	free(bt);
+	freeLists();
 	if (from_file == 1) fclose(file);
 
 	return 0;
