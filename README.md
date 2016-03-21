@@ -11,7 +11,7 @@ There are two ways to use this algorithm:
   * - Run the program using `./altitude`
   * - The program will instruct you to type the weight of each edge, e.g.: `Edge between 'c' and 'g': `
   * - Type `-1` if there's no edge between 'c' and 'g', or the weight of the edge.
-* 2) Get graph data from file:
+* 2) Get graph data from input file:
   * - Run the program using `./altitude test.in`
   * - The program will automatically get data from file.
   * - You will learn how to format the file in the next section
@@ -21,7 +21,7 @@ _Verbose mode is only available if you choose the *Get graph data from file* way
 Simple as it should be, just add the option `verbose` after your command line, like this:
 `./altitude test.in verbose`
 
-# File Format
+# Input File Format
 The input file should have one integer on each line.
 The first line represents the number of vertices, and the following ones represents the weight of the graph edges, according to the rule:
 The first line (after the number of vertices) represents the weight of the edge between 'a' and 'b'. After that, in the next line, the weight of the edge between 'a' and 'c', an go on, like this:
