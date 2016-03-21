@@ -3,14 +3,14 @@ An implementation of a simple algorithm that yields a binary partition tree by a
 
 # Usage
 To compile this program, simply type on the shell:
-    make
+    `make`
 
 There are two ways to use this algorithm:
 
 * 1) Insert graph data manually:
   * - Run the program using `./altitude`
   * - The program will instruct you to type the weight of each edge, e.g.: `Edge between 'c' and 'g': `
-  * - Type `-1` if there's no edge between 'c' and 'g', or the weight of the edge.
+  * - Type `-1` if there's no edge between 'c' and 'g', or the positive integer weight of the edge.
 * 2) Get graph data from input file:
   * - Run the program using `./altitude test.in`
   * - The program will automatically get data from file.
@@ -34,7 +34,7 @@ The first line (after the number of vertices) represents the weight of the edge 
     -1 //No edge between 'b' and 'd'
     4  //Edge between 'c' and 'd' weights 4
 
-_**ATTENTION:** Comments are not allowed in the file, they are just a way to explain!_
+_**ATTENTION:** Comments are not allowed in the input file, they are just a way to explain!_
 
 Contact me if you want to suggest anything or complain about something!
 
