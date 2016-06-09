@@ -1,18 +1,33 @@
 # Altitude Ordering
-An implementation of a simple algorithm that yields a binary partition tree by altitude ordering, as seen in Laurent Najman, Jean Cousty, Benjamin Perret. Playing with Kruskal: algorithms for mor- phological trees in edge-weighted graphs. C.L. Luengo Hendriks, G. Borgefors, R. Strand. In- ternational Symposium on Mathematical Morphology, May 2013, Uppsala, Sweden. Springer, 7883, pp.135-146, 2013, Lecture Notes in Computer Science. &lt;hal-00798621>.
+An implementation of a simple algorithm that yields a binary partition tree by
+altitude ordering, as seen in Laurent Najman, Jean Cousty, Benjamin Perret.
+Playing with Kruskal: algorithms for mor- phological trees in edge-weighted
+graphs. C.L. Luengo Hendriks, G. Borgefors, R. Strand. International Symposium
+on Mathematical Morphology, May 2013, Uppsala, Sweden. Springer, 7883,
+pp.135-146, 2013, Lecture Notes in Computer Science. &lt;hal-00798621>.
 
 # Usage
 To compile this program, simply type on the shell:
     `make`
 
-There are two ways to use this algorithm:
+There are two implementations included:
+
+* 1) Binary Partition Tree: `qbt`
+  * - Uses the simplest implementation, presented on Section 2.2.
+* 2) Tarjan Union-Find: `qt`
+  * - Uses the efficient implementation of Tarjan, presented on Section 2.3.
+
+To run it, use `./altitude`, followed by the implementation you want to use:
+`./altitude qbt` or `./altitude qt`
+
+There are two ways to get input data for this algorithm:
 
 * 1) Insert graph data manually:
-  * - Run the program using `./altitude`
+  * - Run the program using `./altitude qbt|qt`
   * - The program will instruct you to type the weight of each edge, e.g.: `Edge between 'c' and 'g': `
   * - Type `-1` if there's no edge between 'c' and 'g', or the positive integer weight of the edge.
 * 2) Get graph data from input file:
-  * - Run the program using `./altitude test.in`
+  * - Run the program using `./altitude qbt|qt test.in`
   * - The program will automatically get data from file.
   * - You will learn how to format the file in the next section
   

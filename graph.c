@@ -77,16 +77,19 @@ void orderEdges() {
 	}
 }
 
-void makeSet (int q, int inc) {
-	if (verbose) fprintf(stdout, "\n-- MAKE SET (%d)\n", q);
+/********************************************/
+/* Binary Partition Tree                    */
+/********************************************/
+void qbt_makeSet (int q, int inc) {
+	if (verbose) fprintf(stdout, "\n-- QBT MAKE SET (%d)\n", q);
 	bt->parents[q] = -1;
 	if (verbose) fprintf(stdout, "bt->parents[%d] = %d\n", q, bt->parents[q]);
 	if (inc == 1) bt->size += 1;
 	if (verbose) fprintf(stdout, "bt->size = %d\n", bt->size);
 }
 
-int findCanonical (int q) {
-	if (verbose) fprintf(stdout, "\n-- FIND CANONICAL (%d)\n", q);
+int qbt_findCanonical (int q) {
+	if (verbose) fprintf(stdout, "\n-- QBT FIND CANONICAL (%d)\n", q);
 	if (verbose) fprintf(stdout, "bt->parents[%d] = %d\n", q, bt->parents[q]);
 	while (bt->parents[q] >= 0) {
 		q = bt->parents[q];
@@ -96,31 +99,98 @@ int findCanonical (int q) {
 	return q;
 }
 
-int makeUnion (int cx, int cy) {
-	if (verbose) fprintf(stdout, "\n-- MAKE UNION (%d, %d)\n", cx, cy);
+int qbt_makeUnion (int cx, int cy) {
+	if (verbose) fprintf(stdout, "\n-- QBT MAKE UNION (%d, %d)\n", cx, cy);
 	bt->parents[cx] = bt->size;
 	if (verbose) fprintf(stdout, "bt->parents[%d] = %d (bt->size)\n", cx, bt->parents[cx]);
 	bt->parents[cy] = bt->size;
 	if (verbose) fprintf(stdout, "bt->parents[%d] = %d (bt->size)\n", cy, bt->parents[cy]);
-	makeSet(bt->size, 1);
+	qbt_makeSet(bt->size, 1);
 	if (verbose) fprintf(stdout, "return bt->size - 1 = %d\n", bt->size-1);
 	return bt->size-1;
 }
 
-void binaryTreeKruskal() {
+/********************************************/
+/* Tarjan Union-Find                        */
+/********************************************/
+void qt_makeSet (int q, int inc) {
+	if (verbose) fprintf(stdout, "\n-- QT MAKE SET (%d)\n", q);
+  bt->parents[bt->size] = -1;
+	if (verbose) fprintf(stdout, "bt->parents[%d] = %d\n", bt->size, bt->parents[bt->size]);
+  bt->rank[bt->size] = 0;
+	if (verbose) fprintf(stdout, "bt->rank[%d] = %d\n", bt->size, bt->rank[bt->size]);
+  if (inc == 1) bt->size += 1;
+	if (verbose) fprintf(stdout, "bt->size = %d\n", bt->size);
+}
+
+int qt_findCanonical (int q) {
+	if (verbose) fprintf(stdout, "\n-- QT FIND CANONICAL (%d)\n", q);
+  int tmp, r = q;
+
+	if (verbose) fprintf(stdout, "bt->parents[%d] = %d\n", r, bt->parents[r]);
+  while (bt->parents[r] >= 0) {
+    r = bt->parents[r];
+		if (verbose) fprintf(stdout, "bt->parents[%d] = %d\n", r, bt->parents[r]);
+  }
+
+	if (verbose) fprintf(stdout, "bt->parents[%d] = %d\n", q, bt->parents[q]);
+  while (bt->parents[q] >= 0) {
+    tmp = q;
+    q = bt->parents[q];
+    bt->parents[tmp] = r;
+		if (verbose) fprintf(stdout, "bt->parents[%d] = %d\n", tmp, bt->parents[tmp]);
+  }
+
+	if (verbose) fprintf(stdout, "return r = %d\n", r);
+  return r;
+}
+
+int qt_makeUnion (int cx, int cy) {
+	if (verbose) fprintf(stdout, "\n-- QT MAKE UNION (%d, %d)\n", cx, cy);
+  int tmp;
+
+	if (verbose) fprintf(stdout, "bt->rank[%d] = %d\n", cx, bt->rank[cx]);
+	if (verbose) fprintf(stdout, "bt->rank[%d] = %d\n", cy, bt->rank[cy]);
+  if (bt->rank[cx] > bt->rank[cy]) {
+    tmp = cy;
+    cy = cx;
+    cx = tmp;
+  }
+
+  if (bt->rank[cx] == bt->rank[cy]) bt->rank[cy] += 1;
+  bt->rank[cx] = cy;
+
+	if (verbose) fprintf(stdout, "bt->rank[%d] = %d\n", cx, bt->rank[cx]);
+	if (verbose) fprintf(stdout, "bt->rank[%d] = %d\n", cy, bt->rank[cy]);
+
+	if (verbose) fprintf(stdout, "return cy = %d\n", cy);
+  return cy;
+}
+
+void binaryTreeKruskal (int mode) {
 	int cx, cy;
 	Edge *e;
 	e = head;
 	while (e != NULL) {
 		if (verbose) fprintf(stdout, "\n\n-- ARESTA %c -> %c, peso = %d\n", e->v1, e->v2, e->weight);
 
-		cx = findCanonical(e->v1-97);
-		cy = findCanonical(e->v2-97);
+    switch (mode) {
+      case 0: cx = qbt_findCanonical(e->v1-97);
+              cy = qbt_findCanonical(e->v2-97);
+              break;
+      case 1: cx = qt_findCanonical(e->v1-97);
+              cy = qt_findCanonical(e->v2-97);
+              break;
+    }
 
 		if (cx != cy) {
-			//fprintf(stdout, "cx=%d, cy=%d, e(w)=%d, e(v1)=%c|%d, e(v2)=%c|%d\n", cx, cy, e->weight, e->v1, e->v1-97, e->v2, e->v2-97);
 			if (verbose) fprintf(stdout, "weight=%d, v1=%c, v2=%c\n", e->weight, e->v1, e->v2);
-			makeUnion(cx, cy);
+      switch (mode) {
+        case 0:	qbt_makeUnion(cx, cy);
+                break;
+        case 1: qt_makeUnion(cx, cy);
+                break;
+      }
 			if (verbose) fprintf(stdout, "weight=%d, v1=%c(%d), v2=%c(%d)\n", e->weight, e->v1, e->v1-97, e->v2, e->v2-97);
 			createEdge(e->weight, e->v1, e->v2, 1);
 		}

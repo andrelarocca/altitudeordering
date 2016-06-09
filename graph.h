@@ -19,6 +19,7 @@ int n_edges, n_v, n_mst;
 typedef struct BinaryTree {
 	int size;
 	int *parents;
+  int *rank;
 } BinaryTree;
 
 BinaryTree *bt;
@@ -26,10 +27,15 @@ BinaryTree *bt;
 void createEdge (int weight, char v1, char v2, int is_mst);
 void insertEdge (Edge *e, int is_mst);
 void orderEdges();
-void makeSet (int q, int inc);
-int  findCanonical (int q);
-int  makeUnion (int cx, int cy);
-void binaryTreeKruskal();
+//Binary Partition Tree
+void qbt_makeSet (int q, int inc);
+int  qbt_findCanonical (int q);
+int  qbt_makeUnion (int cx, int cy);
+//Tarjan Union-Find
+void qt_makeSet (int q, int inc);
+int  qt_findCanonical (int q);
+int  qt_makeUnion (int cx, int cy);
+void binaryTreeKruskal (int i);
 void printEdges (int is_mst);
 void printParents();
 void freeLists();
